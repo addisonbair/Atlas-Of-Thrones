@@ -1,12 +1,11 @@
 {
-  "name": "atlas-of-thrones",
+  "name": "atlas-of-thrones-frontend",
   "version": "0.8.0",
   "description": "Game of Thrones interactive map, powered by Leaflet, PostGIS, and Redis.",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
-    "start": "node index.js",
     "serve": "webpack --watch & http-server ./public",
-    "dev": "NODE_ENV=local npm start & npm run serve",
+    "dev": "NODE_ENV=local npm run serve",
     "build": "NODE_ENV=production webpack",
     "deploy-frontend": "npm run build && bash deploy.sh"
   },
@@ -28,18 +27,8 @@
   },
   "dependencies": {
     "axios": "0.16.2",
-    "dotenv": "4.0.0",
-    "file-loader": "^2.0.0",
     "fuse.js": "3.0.5",
-    "ioredis": "3.1.4",
-    "joi": "10.6.0",
-    "kcors": "2.2.1",
-    "koa": "^2.7.0",
-    "koa-joi-validate": "0.5.1",
-    "koa-router": "7.2.1",
-    "leaflet": "^1.3.4",
-    "pg": "7.2.0",
-    "winston": "2.3.1"
+    "leaflet": "^1.3.4"
   },
   "devDependencies": {
     "babel-loader": "7.1.2",

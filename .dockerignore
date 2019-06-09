@@ -1,7 +1,0 @@
-.git
-.gitignore
-*.log
-/psql_setup/*
-*.md
-./skaffold.yaml
-./k8s.yaml

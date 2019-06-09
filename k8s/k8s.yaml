@@ -98,42 +98,42 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
-spec:
-  ports:
-  - port: 8080
-    name: frontend
-  selector:
-    app: atlas
-  type: LoadBalancer
----
-apiVersion: v1
-kind: Service
-metadata:
   name: api
 spec:
   ports:
   - port: 5000
     name: api
   selector:
-    app: atlas
+    app: api
+  type: LoadBalancer
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+spec:
+  ports:
+  - port: 8080
+    name: frontend
+  selector:
+    app: frontend
   type: LoadBalancer
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: atlas
+  name: api
   labels:
-    app: atlas
+    app: api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: atlas
+      app: api
   template:
     metadata:
       labels:
-        app: atlas
+        app: api
     spec:
       initContainers:
       - name: wait-for-redis
@@ -147,11 +147,9 @@ spec:
           'until pg_isready -h postgres -U patrick -d atlas_of_thrones -p 5432; 
           do echo waiting for postgres; sleep 1; done;']
       containers:
-      - name: atlas
-        image: aothrones.azurecr.io/atlas
+      - name: api
+        image: aothrones.azurecr.io/api
         ports:
-        - containerPort: 8080
-          name: frontend
         - containerPort: 5000
           name: api
         env:
@@ -161,7 +159,30 @@ spec:
           value: redis
         livenessProbe:
           httpGet:
-            path: /kingdoms/1/summary
+            path: /hello
             port: 5000
           initialDelaySeconds: 15
           periodSeconds: 10
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: aothrones.azurecr.io/frontend
+        ports:
+        - containerPort: 8080
+          name: frontend

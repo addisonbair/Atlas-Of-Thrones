@@ -1,9 +1,8 @@
 FROM node:8.16.0-alpine
 
 WORKDIR /atlas
-EXPOSE 3000
-EXPOSE 8080
-CMD ["npm", "run", "dev"]
+EXPOSE 5000
+CMD ["npm", "run", "start"]
 
 COPY package* ./
 RUN npm install

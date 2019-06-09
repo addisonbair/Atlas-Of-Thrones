@@ -1,0 +1,4 @@
+Dockerfile
+node_modules
+geojson_preview
+public/bundle.js

@@ -5,4 +5,4 @@ RUN apk add --update \
     wget \
 && rm -rf /var/cache/apk/*
 
-COPY ./load_db.sh /docker-entrypoint-initdb.d/load_db.sh
+COPY docker-entrypoint-initdb.d/* /docker-entrypoint-initdb.d/
