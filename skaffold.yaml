@@ -1,0 +1,11 @@
+apiVersion: skaffold/v1beta11
+kind: Config
+build:
+  artifacts:
+  - image: aothrones.azurecr.io/postgis
+    context: psql_setup
+  - image: aothrones.azurecr.io/atlas
+deploy:
+  kubectl:
+    manifests:
+    - k8s.yaml
