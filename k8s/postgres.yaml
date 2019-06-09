@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres
+spec:
+  ports:
+  - port: 5432
+    name: postgres
+  selector:
+    app: postgres
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: postgres
+spec:
+  selector:
+    matchLabels:
+      app: postgres
+  serviceName: postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: postgres
+    spec:
+      containers:
+      - name: postgres
+        image: aothrones.azurecr.io/postgis
+        ports:
+        - containerPort: 5432
+          name: postgres
+        volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: postgres-vol
+        env:
+          - name: POSTGRES_USER
+            value: patrick
+          - name: POSTGRES_DB
+            value: atlas_of_thrones
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-vol
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100M
