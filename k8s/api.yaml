@@ -48,9 +48,3 @@ spec:
           value: "postgres://patrick:@postgres:5432/atlas_of_thrones"
         - name: REDIS_HOST
           value: redis
-        livenessProbe:
-          httpGet:
-            path: /hello
-            port: 5000
-          initialDelaySeconds: 15
-          periodSeconds: 10
