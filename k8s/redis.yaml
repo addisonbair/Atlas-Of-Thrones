@@ -34,12 +34,14 @@ spec:
         volumeMounts:
         - mountPath: /data
           name: redis-vol
+          subPath: redis
   volumeClaimTemplates:
   - metadata:
       name: redis-vol
     spec:
       accessModes:
       - ReadWriteOnce
+      storageClassName: default
       resources:
         requests:
           storage: 50M

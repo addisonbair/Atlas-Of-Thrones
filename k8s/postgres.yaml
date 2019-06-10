@@ -34,6 +34,7 @@ spec:
         volumeMounts:
         - mountPath: /var/lib/postgresql/data
           name: postgres-vol
+          subPath: postgres
         env:
           - name: POSTGRES_USER
             value: patrick
@@ -45,6 +46,7 @@ spec:
     spec:
       accessModes:
       - ReadWriteOnce
+      storageClassName: default
       resources:
         requests:
           storage: 100M
